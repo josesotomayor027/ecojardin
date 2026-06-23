@@ -129,7 +129,7 @@ h1, h2, h3, h4 {
         border-radius: 10px;
         text-align: center;
     }
-     /* Opcional: Esto asegura que el enlace ocupe todo el ancho centrado */
+    /* Opcional: Esto asegura que el enlace ocupe todo el ancho centrado */
     .nav-menu li {
         width: 100%;
     }
@@ -138,13 +138,13 @@ h1, h2, h3, h4 {
     .header-boton {
         display: none;
     }
-    
+
     .opcion-cotizar-movil {
         display: block;
         margin-top: 10px; /* Separación con el enlace de Productos */
     }
-    
-      .btn-header-movil {
+
+    .btn-header-movil {
         display: inline-block;
         background-color: #1a4a16 !important; /* Verde oscuro */
         color: white !important;
@@ -162,7 +162,7 @@ h1, h2, h3, h4 {
 .carrusel-seccion {
     position: relative;
     width: 100%;
-    height: 550px; 
+    height: 550px;
     overflow: hidden;
     background-color: #000; /* Fondo negro de respaldo mientras cargan las fotos */
 }
@@ -182,7 +182,7 @@ h1, h2, h3, h4 {
     opacity: 0; /* Todas las fotos inician completamente invisibles */
     z-index: 1;
     /* TRANSICIÓN PURA: Controla la suavidad del desvanecimiento (1 segundo de duración) */
-    transition: opacity 1s ease-in-out; 
+    transition: opacity 1s ease-in-out;
 }
 
 /* CLASE CLAVE: JavaScript añadirá esta clase a la foto que deba mostrarse */
@@ -206,7 +206,7 @@ h1, h2, h3, h4 {
     width: 100%;
     height: 100%;
     display: flex;             /* ACTIVAR FLEXBOX INTERNO */
-    flex-direction: column;    
+    flex-direction: column;
     justify-content: center;   /* Centrado vertical */
     align-items: center;       /* Centrado horizontal */
     color: white;
@@ -1285,8 +1285,14 @@ html {
 }
 
 @keyframes ventanaEntrada {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .btn-cerrar-modal {
@@ -1416,14 +1422,20 @@ html {
     position: relative;
     border-top: 8px solid #4CAF50; /* Línea decorativa verde arriba */
     box-shadow: 0 20px 45px rgba(0,0,0,0.4);
-    
+
     /* Animación de escala con efecto rebote elástico */
     animation: entradaRebote 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes entradaRebote {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .btn-cerrar-oferta {
@@ -1450,8 +1462,12 @@ html {
 }
 
 @keyframes vibrarIcono {
-    0% { transform: rotate(-5deg); }
-    100% { transform: rotate(5deg); }
+    0% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(5deg);
+    }
 }
 
 .oferta-cuerpo h2 {
@@ -1591,4 +1607,42 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/*venta plantas*/
+.buscador-contenedor {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 0 20px;
+    position: relative;
+}
+.buscador-input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+.buscador-input:focus {
+    border-color: #4CAF50;
+}
+.buscador-contenedor i {
+    position: absolute;
+    left: 35px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+/* Reseteo universal para que ningún padding desborde elementos */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita por completo el desborde y scroll horizontal */
 }
