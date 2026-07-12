@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
               crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
-    
+
     <body>
         <header class="header-principal">
             <div class="container-flex">
@@ -45,30 +45,17 @@
             <h2>Nuestro catálogo de plantas</h2>
 
             <!-- Contenedor de filtros SEPARADOS y estilizados de forma independiente -->
-            <div class="buscador-contenedor" style="display: flex; flex-direction: column; gap: 15px; align-items: center;
-                 margin: 20px auto; max-width: 800px; padding: 0 20px; width: 100%; box-sizing: border-box;">
- 
-               <div style="position: relative; width: 100%; max-width: 400px; box-sizing: border-box;">
+            <div class="buscador-contenedor">
 
-                    <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; 
-                       transform: translateY(-50%); color: #777;"></i>
-                    <input type="text" id="input-busqueda" class="buscador-input" placeholder="Buscar plantas por nombre..." 
-                           style="padding: 12px 15px 12px 45px; width: 100%; border-radius: 30px; border: 1px solid #ccc; 
-                           outline: none; font-size: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <!-- Bloque 1: Caja del Input Buscador -->
+                <div class="input-buscar-wrapper">
+                    <i class="fas fa-search buscador-icono"></i>
+                    <input type="text" id="input-busqueda" class="buscador-input" placeholder="Buscar plantas por nombre...">
                 </div>
-                
-                <div style="position: relative; width: 100%; max-width: 400px; box-sizing: border-box;">
 
-                    <select id="select-temporada" style="width: 100%; padding: 12px 20px; 
-                            border-radius: 30px; border: 1px solid #ccc; outline: none; 
-                            font-size: 15px; cursor: pointer; background-color: white; 
-                            box-shadow: 0 2px 5px rgba(0,0,0,0.05); -webkit-appearance: none; 
-                            -moz-appearance: none; appearance: none; 
-                            background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 
-                            width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23777%22 
-                            stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22>
-                            <polyline points=%226 9 12 15 18 9%22></polyline></svg>'); background-repeat: no-repeat;
-                            background-position: right 15px center; background-size: 16px;">
+                <!-- Bloque 2: Caja del Selector de Temporadas -->
+                <div class="select-wrapper">
+                    <select id="select-temporada" class="buscador-select">
                         <option value="todos">Todas las temporadas</option>
                         <option value="todo el año">Todo el año</option>
                         <option value="primavera">Primavera</option>
@@ -77,312 +64,351 @@
                         <option value="invierno">Invierno</option>
                     </select>
                 </div>
+
+                <div class="select-wrapper">
+                    <select id="select-entorno" class="buscador-select">
+                        <option value="todos">Todos los entornos</option>
+                        <option value="interior">Interiores</option>
+                        <option value="exterior">Exteriores</option>
+                    </select>
+                </div>
+
             </div>
 
             <!-- Lista de plantas con descripciones breves incluidas -->
             <div class="contenedor-servicios" id="lista-plantas">
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 1. Costilla de adán -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/monstera.jpg" alt="Monstera">
                     <h3>Costilla de adán</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Monstera deliciosa</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Famosa por sus grandes hojas perforadas, aporta un aire tropical inigualable a cualquier espacio interior.</p>
+                    <p class="planta-nombre-cientifico">Monstera deliciosa</p>
+                    <p class="planta-descripcion-corta">Famosa por sus grandes hojas perforadas, aporta un aire tropical inigualable a cualquier espacio interior.</p>
                     <p><strong>Luz:</strong> Sombra</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="invierno primavera">
+                <!-- 2. Orquídea Mariposa -->
+                <div class="servicio-item" data-estacion="invierno primavera" data-entorno="interior">
                     <img src="plantas/orquidea_mar.jpg" alt="Orquídea">
                     <h3>Orquídea Mariposa</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Phalaenopsis</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Elegante y estilizada, sus flores exóticas de larga duración son perfectas para decorar centros de mesa.</p>
+                    <p class="planta-nombre-cientifico">Phalaenopsis</p>
+                    <p class="planta-descripcion-corta">Elegante y estilizada, sus flores exóticas de larga duración son perfectas para decorar centros de mesa.</p>
                     <p><strong>Luz:</strong> Interiores con mucha luz</p>
                     <p><strong>Estación:</strong> Invierno / Primavera</p>
                     <p><strong>Riego:</strong> Inmersión</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 3. Limonero -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="exterior">
                     <img src="plantas/limonero.jpg" alt="Limonero">
                     <h3>Limonero</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Citrus × limon</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Árbol frutal perenne ideal para patios soleados, ofreciendo aroma fresco y frutos deliciosos.</p>
+                    <p class="planta-nombre-cientifico">Citrus × limon</p>
+                    <p class="planta-descripcion-corta">Árbol frutal perenne ideal para patios soleados, ofreciendo aroma fresco y frutos deliciosos.</p>
                     <p><strong>Luz:</strong> Sol directo</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Abundante</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 4. Sábila -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="exterior">
                     <img src="plantas/sabila.jpg" alt="Aloe Vera">
                     <h3>Sábila</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Aloe vera</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Planta suculenta indispensable por sus propiedades medicinales y su increíble resistencia a la sequía.</p>
+                    <p class="planta-nombre-cientifico">Aloe vera</p>
+                    <p class="planta-descripcion-corta">Planta suculenta indispensable por sus propiedades medicinales y su increíble resistencia a la sequía.</p>
                     <p><strong>Luz:</strong> Sol directo</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Escaso</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 5. Asiento de suegra -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="exterior">
                     <img src="plantas/asiento_de_suegra.jpg" alt="Asiento de suegra">
                     <h3>Asiento de suegra</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Echinocactus grusonii</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Cacto globular de espinas doradas brillantes, una pieza arquitectónica ideal para xerojardinería.</p>
+                    <p class="planta-nombre-cientifico">Echinocactus grusonii</p>
+                    <p class="planta-descripcion-corta">Cacto globular de espinas doradas brillantes, una pieza arquitectónica ideal para xerojardinería.</p>
                     <p><strong>Luz:</strong> Mucha luz indirecta</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 6. Cuna de moisés -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/cuna_de_moises.jpg" alt="Cuna de moises">
                     <h3>Cuna de moises</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Spathiphyllum</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Excelente purificadora de aire en interiores, destaca por sus elegantes espatas blancas erectas.</p>
+                    <p class="planta-nombre-cientifico">Spathiphyllum</p>
+                    <p class="planta-descripcion-corta">Excelente purificadora de aire en interiores, destaca por sus elegantes espatas blancas erectas.</p>
                     <p><strong>Luz:</strong> Luz indirecta</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="invierno">
+                <!-- 7. Palmera pindo -->
+                <div class="servicio-item" data-estacion="invierno" data-entorno="exterior">
                     <img src="plantas/palmera_pindo.jpg" alt="Palmera pindo">
                     <h3>Palmera pindo</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Syagrus romanzoffiana</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Palmera esbelta de rápido crecimiento, perfecta para añadir altura y elegancia tropical a jardines amplios.</p>
+                    <p class="planta-nombre-cientifico">Syagrus romanzoffiana</p>
+                    <p class="planta-descripcion-corta">Palmera esbelta de rápido crecimiento, perfecta para añadir altura y elegancia tropical a jardines amplios.</p>
                     <p><strong>Luz:</strong> Sol directo</p>
                     <p><strong>Estación:</strong> Invierno</p>
                     <p><strong>Riego:</strong> Bastante</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="primavera verano">
+                <!-- 8. Geranio -->
+                <div class="servicio-item" data-estacion="primavera verano" data-entorno="exterior">
                     <img src="plantas/geranio.jpg" alt="Geranio">
                     <h3>Geranio</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Pelargonium</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Clásica planta de exterior con flores de colores vivos y prolongados, ideal para balcones y maceteros.</p>
+                    <p class="planta-nombre-cientifico">Pelargonium</p>
+                    <p class="planta-descripcion-corta">Clásica planta de exterior con flores de colores vivos y prolongados, ideal para balconies y maceteros.</p>
                     <p><strong>Luz:</strong> Sol directo</p>
                     <p><strong>Estación:</strong> Primavera / Verano</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 9. Lengua de suegra -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/lengua_de_suegra.jpg" alt="Lengua de suegra">
                     <h3>Lengua de suegra</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Sansevieria trifasciata</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Prácticamente indestructible. Sus hojas verticales y rígidas limpian toxinas del ambiente doméstico.</p>
+                    <p class="planta-nombre-cientifico">Sansevieria trifasciata</p>
+                    <p class="planta-descripcion-corta">Prácticamente indestructible. Sus hojas verticales y rígidas limpian toxinas del ambiente doméstico.</p>
                     <p><strong>Luz:</strong> Sombra o Sol directo</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Muy escaso</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="primavera">
+                <!-- 10. Lirio -->
+                <div class="servicio-item" data-estacion="primavera" data-entorno="exterior">
                     <img src="plantas/lirio.jpg" alt="Lirio de la paz">
                     <h3>Lirio</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Lilium</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Llamativa floración primaveral cargada de fragancia majestuosa; un verdadero deleite visual en parterres.</p>
+                    <p class="planta-nombre-cientifico">Lilium</p>
+                    <p class="planta-descripcion-corta">Llamativa floración primaveral cargada de fragancia majestuosa; un verdadero deleite visual en parterres.</p>
                     <p><strong>Luz:</strong> Semisombra</p>
                     <p><strong>Estación:</strong> Primavera</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 11. Naranjo -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="exterior">
                     <img src="plantas/naranjo.jpg" alt="Naranjo">
                     <h3>Naranjo</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Citrus sinensis</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Frutal de follaje denso y verde oscuro que deleita con el azahar perfumado antes de dar sus naranjas.</p>
+                    <p class="planta-nombre-cientifico">Citrus sinensis</p>
+                    <p class="planta-descripcion-corta">Frutal de follaje denso y verde oscuro que deleita con el azahar perfumado antes de dar sus naranjas.</p>
                     <p><strong>Luz:</strong> Sol directo</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Abundante</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 12. Anturio -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/anturio.jpg" alt="Anturio">
                     <h3>Anturio</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Anthurium</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Llama la atención por sus brillantes hojas modificadas de aspecto ceroso, usualmente de un rojo intenso.</p>
+                    <p class="planta-nombre-cientifico">Anthurium</p>
+                    <p class="planta-descripcion-corta">Llama la atención por sus brillantes hojas modificadas de aspecto ceroso, usualmente de un rojo intenso.</p>
                     <p><strong>Luz:</strong> Luz indirecta brillante</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Regular</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 13. Poto -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/poto.jpg" alt="Poto">
                     <h3>Poto</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Epipremnum aureum</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Planta colgante muy noble y versátil; sus guías con hojas acorazonadas caen elegantemente desde repisas.</p>
+                    <p class="planta-nombre-cientifico">Epipremnum aureum</p>
+                    <p class="planta-descripcion-corta">Planta colgante muy noble y versátil; sus guías con hojas acorazonadas caen elegantemente desde repisas.</p>
                     <p><strong>Luz:</strong> Semisombra / Interior</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="invierno primavera">
+                <!-- 14. Azalea -->
+                <div class="servicio-item" data-estacion="invierno primavera" data-entorno="interior">
                     <img src="plantas/azalea.jpg" alt="Azalea">
                     <h3>Azalea</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Rhododendron simsi</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Arbusto compacto que se cubre de densas y románticas flores cuando el clima refresca.</p>
+                    <p class="planta-nombre-cientifico">Rhododendron simsi</p>
+                    <p class="planta-descripcion-corta">Arbusto compacto que se cubre de densas y románticas flores cuando el clima refresca.</p>
                     <p><strong>Luz:</strong> Semisombra</p>
                     <p><strong>Estación:</strong> Invierno / Primavera</p>
                     <p><strong>Riego:</strong> Alto</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="primavera verano">
+                <!-- 15. Hortensia -->
+                <div class="servicio-item" data-estacion="primavera verano" data-entorno="exterior">
                     <img src="plantas/hortensia.jpg" alt="Hortensia">
                     <h3>Hortensia</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Hydrangea macrophylla</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Genera espectaculares pompones de flores cuyos colores varían según la acidez del suelo del jardín.</p>
+                    <p class="planta-nombre-cientifico">Hydrangea macrophylla</p>
+                    <p class="planta-descripcion-corta">Genera espectaculares pompones de flores cuyos colores varían según la acidez del suelo del jardín.</p>
                     <p><strong>Luz:</strong> Sombra / Sombra parcial</p>
                     <p><strong>Estación:</strong> Primavera / Verano</p>
                     <p><strong>Riego:</strong> Abundante</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="primavera otoño">
+                <!-- 16. Rosal -->
+                <div class="servicio-item" data-estacion="primavera otoño" data-entorno="exterior">
                     <img src="plantas/rosal.jpg" alt="Rosal Mini">
                     <h3>Rosal</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Rosa spp.</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">La reina clásica de las flores; aporta aroma, romanticismo y color tradicional a cualquier rincón soleado.</p>
+                    <p class="planta-nombre-cientifico">Rosa spp.</p>
+                    <p class="planta-descripcion-corta">La reina clásica de las flores; aporta aroma, romanticismo y color tradicional a cualquier rincón soleado.</p>
                     <p><strong>Luz:</strong> Sol directo</p>
                     <p><strong>Estación:</strong> Primavera / Otoño</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 17. Helecho -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/helecho.jpg" alt="Helecho Rizo">
                     <h3>Helecho</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Nephrolepis exaltata</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Follaje plumoso y arqueado que adora los ambientes húmedos. Excelente opción para cuartos de baño bien iluminados.</p>
+                    <p class="planta-nombre-cientifico">Nephrolepis exaltata</p>
+                    <p class="planta-descripcion-corta">Follaje plumoso y arqueado que adora los ambientes húmedos. Excelente opción para cuartos de baño bien iluminados.</p>
                     <p><strong>Luz:</strong> Sombra / Humedad alta</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Frecuente</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 18. Árbol de la abundancia -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="exterior">
                     <img src="plantas/arbol_abundancia.jpg" alt="Árbol de la Abundancia">
                     <h3>Árbol de la abundancia</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Portulacaria afra</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Pequeñas hojas carnosas de color verde brillante sobre tallos rojizos; símbolo de prosperidad y buena fortuna.</p>
+                    <p class="planta-nombre-cientifico">Portulacaria afra</p>
+                    <p class="planta-descripcion-corta">Pequeñas hojas carnosas de color verde brillante sobre tallos rojizos; símbolo de prosperidad y buena fortuna.</p>
                     <p><strong>Luz:</strong> Pleno sol</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Escaso</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 19. Ficus benjamina -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/Ficus_benjamina.jpg" alt="Ficus Benjamina">
                     <h3>Ficus benjamina</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Ficus benjamina</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Elegante árbol de interior con ramas péndulas y abundantes hojas menudas que filtran impurezas del hogar.</p>
+                    <p class="planta-nombre-cientifico">Ficus benjamina</p>
+                    <p class="planta-descripcion-corta">Elegante árbol de interior con ramas péndulas y abundantes hojas menudas que filtran impurezas del hogar.</p>
                     <p><strong>Luz:</strong> Luz indirecta brillante</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="primavera verano">
+                <!-- 20. Lavanda -->
+                <div class="servicio-item" data-estacion="primavera verano" data-entorno="exterior">
                     <img src="plantas/lavanda.jpg" alt="Lavanda">
                     <h3>Lavanda</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Lavandula angustifolia</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Famosa por sus espigas moradas y su perfume relajante que repele insectos dañinos de forma natural.</p>
+                    <p class="planta-nombre-cientifico">Lavandula angustifolia</p>
+                    <p class="planta-descripcion-corta">Famosa por sus espigas moradas y su perfume relajante que repele insectos dañinos de forma natural.</p>
                     <p><strong>Luz:</strong> Sol directo</p>
                     <p><strong>Estación:</strong> Primavera / Verano</p>
                     <p><strong>Riego:</strong> Bajo</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 21. Planta cebra -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/planta_cebra.jpg" alt="Planta Cebra">
                     <h3>Planta cebra</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Haworthiopsis fasciata</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Mini suculenta con llamativas franjas blancas horizontales, perfecta para escritorios o arreglos pequeños.</p>
+                    <p class="planta-nombre-cientifico">Haworthiopsis fasciata</p>
+                    <p class="planta-descripcion-corta">Mini suculenta con llamativas franjas blancas horizontales, perfecta para escritorios o arreglos pequeños.</p>
                     <p><strong>Luz:</strong> Luz brillante / Interior</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Muy bajo</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 22. Begonia -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/begonia.jpg" alt="Begonia">
                     <h3>Begonia</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Begonia semperflorens</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Floración incansable y hojas de tonos bronceados o verdes que decoran macetas a la semisombra.</p>
+                    <p class="planta-nombre-cientifico">Begonia semperflorens</p>
+                    <p class="planta-descripcion-corta">Floración incansable y hojas de tonos bronceados o verdes que decoran macetas a la semisombra.</p>
                     <p><strong>Luz:</strong> Semisombra</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Regular</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 23. Árbol de jade -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="exterior">
                     <img src="plantas/jade.jpg" alt="Árbol de Jade">
                     <h3>Árbol de jade</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Crassula ovata</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Considerada amuleto energizante; sus hojas gruesas retienen agua permitiéndole vivir con mínimos cuidados.</p>
+                    <p class="planta-nombre-cientifico">Crassula ovata</p>
+                    <p class="planta-descripcion-corta">Considerada amuleto energizante; sus hojas gruesas retienen agua permitiéndole vivir con mínimos cuidados.</p>
                     <p><strong>Luz:</strong> Sol directo / Semisombra</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Escaso</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 24. Cróton -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/croton.jpg" alt="Croto">
                     <h3>Cróton</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Codiaeum variegatum</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Un estallido de color otoñal permanente con hojas veteadas en amarillo, naranja y rojo intenso.</p>
+                    <p class="planta-nombre-cientifico">Codiaeum variegatum</p>
+                    <p class="planta-descripcion-corta">Un estallido de color otoñal permanente con hojas veteadas en amarillo, naranja y rojo intenso.</p>
                     <p><strong>Luz:</strong> Mucha luz indirecta</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 25. Romero -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="exterior">
                     <img src="plantas/romero.jpg" alt="Romero">
                     <h3>Romero</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Salvia rosmarinus</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Arbusto aromático indispensable en la cocina mediterránea, sumamente rústico y amante del sol pleno.</p>
+                    <p class="planta-nombre-cientifico">Salvia rosmarinus</p>
+                    <p class="planta-descripcion-corta">Arbusto aromático indispensable en la cocina mediterránea, sumamente rústico y amante del sol pleno.</p>
                     <p><strong>Luz:</strong> Pleno sol</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Escaso</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="primavera verano">
+                <!-- 26. Manta de Eva -->
+                <div class="servicio-item" data-estacion="primavera verano" data-entorno="exterior">
                     <img src="plantas/manto_eva.jpg" alt="Manta de Eva">
                     <h3>Manta de Eva</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Alocasia odora</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Hojas gigantescas con forma de oreja de elefante que crean focos de atención exóticos en patios sombreados.</p>
+                    <p class="planta-nombre-cientifico">Alocasia odora</p>
+                    <p class="planta-descripcion-corta">Hojas gigantescas con forma de oreja de elefante que crean focos de atención exóticos en patios sombreados.</p>
                     <p><strong>Luz:</strong> Semisombra</p>
                     <p><strong>Estación:</strong> Primavera / Verano</p>
                     <p><strong>Riego:</strong> Alto</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 27. Cinta -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/cinta.jpg" alt="Cinta o Malamadre">
                     <h3>Cinta</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Chlorophytum comosum</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Hojas acintadas bicolores que generan estolones colgantes con pequeñas plantas hijas de aspecto muy ornamental.</p>
+                    <p class="planta-nombre-cientifico">Chlorophytum comosum</p>
+                    <p class="planta-descripcion-corta">Hojas acintadas bicolores que generan estolones colgantes con pequeñas plantas hijas de aspecto muy ornamental.</p>
                     <p><strong>Luz:</strong> Semisombra / Interior</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 28. Calathea -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/calathea.jpg" alt="Calathea Triostar">
                     <h3>Calathea</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Calathea noisette</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Llamada la 'planta rezadora' porque pliega sus coloridas hojas al anochecer siguiendo ritmos circadianos.</p>
+                    <p class="planta-nombre-cientifico">Calathea noisette</p>
+                    <p class="planta-descripcion-corta">Llamada la 'planta rezadora' porque pliega sus coloridas hojas al anochecer siguiendo ritmos circadianos.</p>
                     <p><strong>Luz:</strong> Sombra / Luz difusa</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Regular (Mantener húmedo)</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="primavera verano">
+                <!-- 29. Agapanto -->
+                <div class="servicio-item" data-estacion="primavera verano" data-entorno="exterior">
                     <img src="plantas/agapanto.jpg" alt="Agapanto">
                     <h3>Agapanto</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Agapanthus praecox</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Macizos espectaculares que coronan con grandes globos de flores celestes o blancas a finales de primavera.</p>
+                    <p class="planta-nombre-cientifico">Agapanthus praecox</p>
+                    <p class="planta-descripcion-corta">Macizos espectaculares que coronan con grandes globos de flores celestes o blancas a finales de primavera.</p>
                     <p><strong>Luz:</strong> Sol directo o Semisombra</p>
                     <p><strong>Estación:</strong> Primavera / Verano</p>
                     <p><strong>Riego:</strong> Moderado</p>
                 </div>
 
-                <div class="servicio-item" data-estacion="todo el año">
+                <!-- 30. Peperomia -->
+                <div class="servicio-item" data-estacion="todo el año" data-entorno="interior">
                     <img src="plantas/peperomia.jpg" alt="Peperomia">
                     <h3>Peperomia</h3>
-                    <p style="font-style: italic; color: #4CAF50; margin-bottom: 5px; font-weight: bold;">Peperomia obtusifolia</p>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.4;">Hojas redondeadas de consistencia coriácea, una planta sumamente compacta y noble para estanterías.</p>
+                    <p class="planta-nombre-cientifico">Peperomia obtusifolia</p>
+                    <p class="planta-descripcion-corta">Hojas redondeadas de consistencia coriácea, una planta sumamente compacta y noble para estanterías.</p>
                     <p><strong>Luz:</strong> Interior / Luz media</p>
                     <p><strong>Estación:</strong> Todo el año</p>
                     <p><strong>Riego:</strong> Escaso</p>
-                </div>
-            </div>
-        </section>
+                </div>  
+
+        </section> -->
 
         <!-- (El resto del panel del carrito y el footer se mantienen idénticos al tuyo) -->
         <div class="carrito-panel" id="carrito-panel">
