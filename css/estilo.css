@@ -507,172 +507,136 @@ h1, h2, h3, h4 {
 
 /* PRODUCTOS */
 
-.productos {
-    padding: 80px 0;
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
-}
-
-.titulo-seccion {
+/* 1. CONTENEDOR DE LA CUADRÍCULA DE PRODUCTOS (FLEXBOX / GRID RESPONSIVO) */
+.productos-seccion {
+    padding: 60px 20px;
+    background-color: #f9f9f9; /* Fondo gris claro neutro para hacer resaltar las tarjetas */
     text-align: center;
-    color: #2d5a27;
-    font-size: 2.5rem;
-    margin-bottom: 50px;
 }
 
-/* --- GRID LAYOUT --- */
-.grid-productos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas automáticas */
-    gap: 30px;
-    padding: 0 20px;
+/* --- CENTRAR EL TÍTULO DE LA SECCIÓN PRODUCTOS --- */
+.titulo-seccion,
+#productos h2 {
+    text-align: center !important;  /* Centra el título en la pantalla */
+    color: #1a4a16 !important;       /* Aplica exactamente el mismo color verde de servicios */
+    font-size: 2.2rem;              /* Mantiene el tamaño proporcional */
+    font-weight: 700;               /* Le da el grosor de la tipografía Poppins */
+    margin-top: 0;
+    margin-bottom: 40px;            /* Espaciado perfecto con las tarjetas de abajo */
+}
+
+
+
+.productos-seccion h2 {
+    color: #1a4a16; /* Verde oscuro institucional */
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
+
+/* Contenedor flexible que alinea las 4 tarjetas en fila */
+.productos-contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Separación simétrica entre tarjetas */
     max-width: 1200px;
-    margin: 0 auto 60px auto;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/*  Tarjetas */
+/* 2. ESTRUCTURA INTERNA DE LA TARJETA (CARD) */
 .producto-card {
-    background: #fff;
-    border-radius: 15px;
-    overflow: hidden; /* Corta el excedente de las imágenes */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    text-align: center;
-    animation: aparecerDesdeAbajo 1s ease-out forwards;
-    opacity: 0;
+    background-color: #ffffff;
+    border-radius: 16px; /* Bordes ovalados modernos */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Sombra suave para dar profundidad */
+    width: 100%;
+    max-width: 270px; /* Ancho perfecto para que entren 4 tarjetas en PC */
+    overflow: hidden; /* Corta el desborde de las imágenes al animarse */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border: 1px solid #f0f0f0;
 }
 
-/*  fotos */
+/* Contenedor de la foto del producto */
 .producto-img {
-    height: 220px;
-    overflow: hidden;
+    width: 100%;
+    height: 200px;
+    overflow: hidden; /* Indispensable para que el zoom de JS se quede dentro del marco */
+    position: relative;
 }
 
+/* 3. ANIMACIÓN DE IMÁGENES MEDIANTE JAVASCRIPT (DOM) */
 .producto-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* TRANSICIÓN: Controla que el regreso al estado normal tras quitar el mouse sea suave (0.4 segundos) */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+    transform-origin: center center; /* El eje de la transformación nace al centro de la foto */
 }
 
-/*  KEYFRAMES */
-@keyframes aparecerDesdeAbajo {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* CLASE ACTIVA: JavaScript inyectará este bloque dinámicamente con el mouseenter */
+.producto-img img.transformar-producto-foto {
+    /* EXPLICACIÓN: scale(1.08) agranda la foto un 8% y rotate(2deg) la inclina sutilmente a la derecha */
+    transform: scale(1.08) rotate(2deg); 
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Sombra flotante más pesada cuando está activa */
 }
 
-/*  PRODUCTO 1 (Grass): ANIMACIÓN PURA (Efecto latido continuo en bucle)*/
-.grid-productos .producto-card:nth-child(1):hover .producto-img img {
-    /* Llama a la regla @keyframes, es infinita y alterna dirección */
-    animation: latidoEfecto 1s infinite alternate ease-in-out;
-}
-
-@keyframes latidoEfecto {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(1.15); /* Crece y se encoge constantemente */
-    }
-}
-
-
-/*  PRODUCTO 2 (Plantas): TRANSFORMACIÓN PURA (Volteo 3D instantáneo)*/
-.grid-productos .producto-card:nth-child(2):hover .producto-img img {
-    /* Voltea la imagen de manera inmediata sin suavizado de tiempo */
-    transform: rotateY(180deg);
-}
-
-
-/* PRODUCTO 3 (Abonos): TRANSICIÓN PURA (Cambio de estilos suave en el tiempo) */
-/* Estado Inicial del Producto 3 */
-.grid-productos .producto-card:nth-child(3) .producto-img img {
-    border-radius: 0px;
-    filter: grayscale(100%); /* Inicia en blanco y negro */
-    /* La transición calcula el cambio intermedio en un lapso de 0.8 segundos */
-    transition: filter 0.8s ease, border-radius 0.8s ease;
-}
-
-/* Estado Final al pasar el mouse */
-.grid-productos .producto-card:nth-child(3):hover .producto-img img {
-    filter: grayscale(0%); /* Recupera sus colores naturales */
-    border-radius: 50%;    /* Se convierte en un círculo perfecto */
-}
-
-
-/* PRODUCTO 4 (Palmeras): EFECTO COMBINADO (Transformación + Transición)*/
-/* Estado Inicial */
-.grid-productos .producto-card:nth-child(4) .producto-img img {
-    /* Prepara la suavidad para la transformación */
-    transition: transform 0.5s ease;
-}
-
-/* Estado Final */
-.grid-productos .producto-card:nth-child(4):hover .producto-img img {
-    /* Aplica escala e inclinación suavizadas gracias a la línea anterior */
-    transform: scale(1.12) skewX(-6deg);
-}
-
+/* 4. SECCIÓN DE TEXTOS E INFORMACIÓN */
 .producto-info {
-    padding: 20px;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
 }
 
 .producto-info h3 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
+    color: #333333;
+    font-size: 1.25rem;
+    margin: 0 0 10px 0;
+    font-weight: 600;
 }
 
 .producto-info p {
-    color: #777;
+    color: #777777;
     font-size: 0.9rem;
-    margin-bottom: 20px;
+    line-height: 1.5;
+    margin: 0 0 15px 0;
 }
 
-.btn-comprar {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-comprar:hover {
-    background-color: #2d5a27;
-}
-
-/* --- ESTILO DEL SELECTOR DENTRO DE LA TARJETA --- */
+/* 5. SELECTOR DINÁMICO (Exclusivo de la tarjeta de Plantas Ornamentales) */
 .selector-planta-contenedor {
-    margin-bottom: 15px;
-    padding: 0 10px;
+    width: 100%;
+    margin-bottom: 20px;
     text-align: left;
 }
 
 .selector-planta-contenedor label {
-    font-size: 0.8rem;
-    color: #666;
+    font-size: 0.75rem;
+    color: #666666;
+    font-weight: 600;
     display: block;
     margin-bottom: 5px;
-    font-weight: 500;
 }
 
 .select-tipo-planta {
     width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ddd;
+    padding: 10px 12px;
+    border: 1px solid #dddddd;
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
     font-size: 0.85rem;
-    color: #333;
+    color: #444444;
     background-color: #f9f9f9;
     outline: none;
+    cursor: pointer;
     transition: border-color 0.3s;
 }
 
@@ -680,6 +644,48 @@ h1, h2, h3, h4 {
     border-color: #4CAF50;
     background-color: #ffffff;
 }
+
+/* 6. ESTILOS DE LOS BOTONES VERDES "COMPRAR" */
+.btn-comprar {
+    background-color: #4CAF50; /* Verde brillante de EcoJardin */
+    color: #ffffff;
+    border: none;
+    padding: 10px 35px;
+    border-radius: 25px; /* Botón ovalado clásico */
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s, transform 0.2s;
+    width: auto;
+    display: inline-block;
+}
+
+.btn-comprar:hover {
+    background-color: #2d5a27; /* Cambia a verde oscuro al pasar el cursor */
+    transform: scale(1.05); /* Efecto de rebote del botón */
+}
+
+/* 7. RESPONSIVIDAD PARA DISPOSITIVOS MÓVILES (CELULARES) */
+@media (max-width: 768px) {
+    .productos-seccion {
+        padding: 40px 15px;
+    }
+    
+    .productos-seccion h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .productos-contenedor {
+        gap: 20px;
+    }
+
+    .producto-card {
+        max-width: 100%; /* Las tarjetas pasan a ocupar todo el ancho del celular en una sola columna */
+    }
+}
+
 
 
 
@@ -1645,4 +1651,427 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden; /* Evita por completo el desborde y scroll horizontal */
+}
+
+/* ==========================================================================
+   VENTAS PLANTAS
+   ========================================================================== */
+
+/* 1. CONTENEDOR GENERAL DE LOS FILTROS DE BÚSQUEDA */
+.buscador-contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    margin: 30px auto;
+    max-width: 500px;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Envolturas relativas para alinear iconos internos */
+.input-buscar-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    box-sizing: border-box;
+    display: block; /* Asegura el comportamiento de bloque limpio */
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    box-sizing: border-box;
+}
+
+/* CORRECCIÓN: Posicionamiento de la lupa con margen de respiración */
+.buscador-icono {
+    position: absolute;
+    left: 20px !important;    /* Lo ancla fijamente a la izquierda del recuadro blanco */
+    top: 50% !important;     /* Lo centra verticalmente a la mitad exacta de la caja */
+    transform: translateY(-50%) !important;
+    color: #888888 !important; /* Un gris neutro elegante */
+    z-index: 20 !important;   /* Lo posiciona al frente por encima del fondo */
+    font-size: 1rem;
+    pointer-events: none;    /* Evita que interfiera al hacer clic en el texto */
+}
+
+
+.buscador-input {
+    width: 100%;
+    /* EXPLICACIÓN: 55px de padding izquierdo obliga a que el texto "Buscar..." empiece mucho más a la derecha, dejando la lupa libre */
+    padding: 14px 20px 14px 55px !important;
+    border-radius: 30px;
+    border: 1px solid #cccccc;
+    outline: none;
+    font-size: 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-align: left !important; /* Fuerza al texto a alinearse a la izquierda de forma estricta */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.buscador-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 3px 8px rgba(76, 175, 80, 0.2);
+}
+
+/* Diseño estilizado para el selector de temporadas */
+.buscador-select {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: 1px solid #cccccc;
+    outline: none;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #ffffff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s;
+
+    /* Personalización de la flecha nativa */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 15px;
+}
+
+.buscador-select:focus {
+    border-color: #4CAF50;
+}
+
+/* 2. MAQUETACIÓN CUADRÍCULA: SEPARACIÓN DE LAS TARJETAS DE PRODUCTOS */
+.contenedor-servicios,
+.lista-plantas,
+#lista-plantas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    /* CORRECCIÓN: Separación generosa de 35px entre tarjetas para evitar que estén muy apegadas */
+    gap: 35px;
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Estructura limpia e interna de la tarjeta de cada planta */
+.servicio-item {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    padding: 24px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.servicio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.servicio-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.servicio-item h3 {
+    color: #1a4a16;
+    font-size: 1.2rem;
+    margin: 10px 0 5px 0;
+}
+
+/* Estilos de tipografías trasladados desde el HTML */
+.planta-nombre-cientifico {
+    font-style: italic;
+    color: #4CAF50;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.planta-descripcion-corta {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.servicio-item p strong {
+    color: #333333;
+}
+
+/* ==========================================================================
+   ANIMACIÓN DE IMÁGENES MEDIANTE JAVASCRIPT (DOM EVENTS)
+   ========================================================================== */
+
+/* Estado inicial de todas las imágenes del catálogo */
+.servicio-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    /* TRANSICIÓN: Controla la suavidad del agrandado (0.35 segundos) */
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s ease;
+}
+
+/* CLASE EFECTO: JavaScript inyectará esta clase para agrandar la foto notablemente */
+.servicio-item img.animar-foto {
+    transform: scale(1.15); /* EXPLICACIÓN: Aumenta el tamaño un 15% hacia el frente (Zoom marcado) */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra elegante que da efecto de elevación */
+}
+
+/* --- ESTILOS DE LA BOLETA ELECTRÓNICA MODAL --- */
+.modal-boleta {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 4000; /* Prioridad alta */
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-boleta.mostrar-boleta {
+    display: flex;
+}
+
+.boleta-contenido {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px dashed #ccc; /* Efecto ticket desglosable */
+}
+
+.boleta-header {
+    text-align: center;
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.boleta-logo {
+    color: #2d5a27;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.boleta-tipo {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin: 5px 0 2px 0;
+    letter-spacing: 1px;
+}
+
+.boleta-numero {
+    font-size: 0.8rem;
+    color: #555;
+    margin: 0;
+}
+
+.boleta-datos-empresa {
+    font-size: 0.8rem;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.boleta-datos-empresa p {
+    margin: 2px 0;
+}
+
+.boleta-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.boleta-tabla th {
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+    text-align: left;
+}
+
+.boleta-tabla td {
+    padding: 6px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.txt-derecha {
+    text-align: right;
+}
+
+.boleta-totales {
+    border-top: 1px solid #333;
+    padding-top: 10px;
+    font-size: 0.85rem;
+}
+
+.boleta-fila-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.final-resaltado {
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: #2d5a27;
+    border-top: 1px dashed #333;
+    padding-top: 5px;
+    margin-top: 5px;
+}
+
+.boleta-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.75rem;
+    color: #777;
+}
+
+.boleta-footer p {
+    margin: 3px 0;
+}
+
+.btn-cerrar-boleta {
+    margin-top: 15px;
+    width: 100%;
+    background-color: #2d5a27;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.3s;
+}
+
+.btn-cerrar-boleta:hover {
+    background-color: #4CAF50;
+}
+
+
+/* --- ESTILOS COMPLEMENTARIOS PARA CANTIDADES AGRUPADAS --- */
+.carrito-item-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.item-carrito-cantidad {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: bold;
+}
+
+/* Alineación de columnas de la boleta */
+.boleta-tabla th, .boleta-tabla td {
+    padding: 6px 4px;
+}
+.txt-centro {
+    text-align: center;
+}
+
+/* --- ESTILOS DEL BOTÓN FLOTANTE DE WHATSAPP INTERACTIVO --- */
+.whatsapp-flotante-contenedor {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 5000; /* Por encima de cualquier modal o panel */
+    opacity: 0;   /* Inicia completamente invisible */
+    transform: translateY(20px); /* Desplazado ligeramente hacia abajo */
+    transition: opacity 0.4s ease, transform 0.4s ease; /* Transición para JS */
+}
+
+/* Clase que activará JavaScript al bajar la pantalla (Scroll) */
+.whatsapp-flotante-contenedor.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* El botón circular de WhatsApp */
+.btn-whatsapp-link {
+    background-color: #25d366; /* Verde oficial de WhatsApp */
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-whatsapp-link:hover {
+    transform: scale(1.1) rotate(10deg); /* Pequeño brinco y rotación al pasar el mouse */
+    background-color: #20ba5a;
+}
+
+/* El mensaje emergente (Tooltip) que controla JS */
+.whatsapp-tooltip {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    white-space: nowrap;
+    opacity: 0; /* Inicia oculto, JS lo prenderá en el hover */
+    transform: translateX(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative;
+}
+
+/* Triángulo decorativo del mensaje emergente */
+.whatsapp-tooltip::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 6px 0 6px 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #333333;
+}
+
+/* Clase que activará JavaScript en el hover */
+.whatsapp-tooltip.mostrar-tooltip {
+    opacity: 1;
+    transform: translateX(0);
 }
