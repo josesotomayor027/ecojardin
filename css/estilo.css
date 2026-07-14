@@ -1928,6 +1928,15 @@ body {
     text-align: right;
 }
 
+.boleta-tabla th:nth-child(3), 
+.boleta-tabla td:nth-child(3),
+.boleta-tabla th:nth-child(4), 
+.boleta-tabla td:nth-child(4) {
+    min-width: 90px;      /* Espacio para que no se rompa*/
+    width: auto;          /* Permite que crezca la boleta */
+    white-space: nowrap;  /* Prohíbe  el salto de línea */
+} 
+
 .boleta-totales {
     border-top: 1px solid #333;
     padding-top: 10px;
@@ -1978,6 +1987,93 @@ body {
     background-color: #4CAF50;
 }
 
+/* Capa de fondo oscura para el confirm personalizado */
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    z-index: 4000; /* Capa altísima para tapar la Navbar y el formulario de pago */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Clase que activa JavaScript para mostrar el modal */
+.confirm-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Tarjeta blanca del mensaje */
+.confirm-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.2);
+}
+
+.confirm-icon i {
+    font-size: 42px;
+    color: #2d6a4f; /* Tu verde corporativo */
+    margin-bottom: 15px;
+}
+
+.confirm-card h4 {
+    margin: 0 0 10px 0;
+    color: #1b4332;
+    font-size: 18px;
+}
+
+.confirm-card p {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de botones alineados horizontalmente */
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.confirm-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.btn-secundario-modal {
+    background-color: #e0e0e0;
+    color: #333333;
+}
+
+.btn-secundario-modal:hover {
+    background-color: #d5d5d5;
+}
+
+.btn-principal-modal {
+    background-color: #2d6a4f;
+    color: #ffffff;
+}
+
+.btn-principal-modal:hover {
+    background-color: #1b4332;
+}
+
 
 /* --- ESTILOS COMPLEMENTARIOS PARA CANTIDADES AGRUPADAS --- */
 .carrito-item-detalles {
@@ -2008,7 +2104,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    z-index: 5000; /* Por encima de cualquier modal o panel */
+    z-index: 900; /* Por encima de cualquier modal o panel */
     opacity: 0;   /* Inicia completamente invisible */
     transform: translateY(20px); /* Desplazado ligeramente hacia abajo */
     transition: opacity 0.4s ease, transform 0.4s ease; /* Transición para JS */
@@ -2073,5 +2169,58 @@ body {
 /* Clase que activará JavaScript en el hover */
 .whatsapp-tooltip.mostrar-tooltip {
     opacity: 1;
+    transform: translateX(0);
+}
+
+/* 1. Contenedor invisible en la esquina superior derecha */
+.toast-container {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 5000; /* Un número muy alto para que tape la Navbar y cualquier modal */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 2. Diseño de la tarjetita verde de éxito */
+.toast-success {
+    background-color: #2d6a4f; /* El verde oscuro de tu proyecto */
+    color: #ffffff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    /* Efecto inicial: escondido fuera de la pantalla a la derecha */
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3. Clase que activa JavaScript para hacer aparecer la tarjeta */
+.toast-success.show {
+    transform: translateX(0); /* Entra deslizándose a su posición */
+}
+
+/* Animación flotante para el panel del carrito */
+.carrito-sidebar, #carritoPanel { 
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 350px;
+    z-index: 1500; /* Flota sobre las tarjetas */
+    transform: translateX(100%); /* Escondido a la derecha */
+    transition: transform 1s ease-in-out; /* Desplazamiento suave */
+}
+
+/* Cuando se abre, entra a la pantalla */
+.carrito-sidebar.abierto, #carritoPanel.abierto,
+.carrito-sidebar.mostrar, #carritoPanel.mostrar {
     transform: translateX(0);
 }
