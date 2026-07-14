@@ -81,10 +81,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAplicarCupon = document.getElementById("btn-aplicar-cupon");
     const mensajeCupon = document.getElementById("mensaje-cupon-estado");
 
-    let listaCarrito = []; // Guardará objetos estructurados: { nombre, precio, cantidad }
+   let listaCarrito = JSON.parse(localStorage.getItem('carritoEcoJardin')) || [];
+
+// Ejecuta tu función de renderizado inmediatamente al cargar la página
+
     let sumaTotalGlobal = 0;
     let descuentoAplicado = 0;
-
+renderizarCarrito();
     if (abrirCarritoBtn && carritoPanel) {
         abrirCarritoBtn.addEventListener("click", () => {
             carritoPanel.classList.add("abierto");
@@ -153,13 +156,48 @@ document.addEventListener("DOMContentLoaded", () => {
             const titular = document.getElementById("pago-nombre").value;
             const montoFinalCobrado = sumaTotalGlobal - descuentoAplicado;
 
-            // FUNCIÓN PROPIA DE JAVASCRIPT SEGÚN LA GUÍA UTP: confirm()
-            const usuarioConfirma = confirm(`¿Estás seguro de que deseas proceder con el pago seguro de S/ ${montoFinalCobrado.toFixed(2)}?`);
+            // --- NUEVA LÓGICA DE CONFIRMACIÓN INTEGRADA  ---
+            const miConfirmModal = document.getElementById('custom-confirm-modal');
+            const btnAceptarConfirm = document.getElementById('btn-confirm-accept');
+            const btnCancelarConfirm = document.getElementById('btn-confirm-cancel');
+            miConfirmModal.classList.add('active');
 
-            if (!usuarioConfirma) {
-                alert("Transacción cancelada de forma segura por el usuario.");
+            // Si cancela, cerramos y detenemos todo de forma segura
+            btnCancelarConfirm.onclick = () => {
+                miConfirmModal.classList.remove('active');
+                mostrarNotificacionExito("Transacción cancelada de forma segura por el usuario.");
+            };
+
+            // Si acepta -> Ejecuta toda la lógica contable y de boleta
+            btnAceptarConfirm.onclick = () => {
+                miConfirmModal.classList.remove('active'); // Ocultamos el confirm
+                modalPago.classList.remove('active');      // Ocultamos el modal de pago original
+         // CASO: Si el usuario da clic en "Aceptar"    
+                btnAceptarConfirm.onclick = () => {
+                    miConfirmModal.classList.remove('active');
+                    modalPago.classList.remove('active');
+
+                  
+                    confirmacionAprobada = true;
+                    formularioPago.querySelector('button[type="submit"]').click();
+                };
+
                 return;
-            }
+                // ==========================================
+                // LÓGICA DE CONTABILIDAD ACTUALIZADA (CON DESCUENTO E IGV)
+                // ==========================================
+
+                // 1. Desglosamos el subtotal e IGV... 
+                const subtotalCalculado = montoFinalCobrado / 1.18;
+                const igvCalculado = montoFinalCobrado - subtotalCalculado;
+
+                // 2. Inyección de datos... 
+                document.getElementById("boleta-cliente-nombre").textContent = titular.toUpperCase();
+
+                // Al final, se abre la boleta en pantalla
+                modalBoleta.classList.add('active');
+
+            };
 
             // ==================================================================
             // LÓGICA DE CONTABILIDAD ACTUALIZADA (CON DESCUENTO E IGV)
@@ -191,8 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     fila.innerHTML = `
                         <td class="txt-centro"><strong>${item.cantidad}x</strong></td>
                         <td>${item.nombre}</td>
-                        <td class="txt-derecha">S/ ${item.precio.toFixed(2)}</td>
-                        <td class="txt-derecha">S/ ${totalFila.toFixed(2)}</td>
+                    
+                    <td class="txt-derecha">S/ ${item.precio.toFixed(2)}</td>
+                    <td class="txt-derecha">S/ ${totalFila.toFixed(2)}</td>
+
                     `;
                     cuerpoTablaBoleta.appendChild(fila);
                 });
@@ -214,22 +254,32 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("boleta-igv").textContent = `S/ ${igvCalculado.toFixed(2)}`;
             document.getElementById("boleta-total-final").textContent = `S/ ${montoFinalCobrado.toFixed(2)}`;
 
-            // 6. Transición de ventanas modales
-            modalPago.classList.remove("mostrar");
-            const modalBoleta = document.getElementById("modal-boleta-exito");
-            if (modalBoleta) {
-                modalBoleta.classList.add("mostrar-boleta");
-            }
+            //6. transaccion
+            btnAceptarConfirm.onclick = () => {
+                miConfirmModal.classList.remove('active'); // Oculta el confirm verde
 
+                // 
+                const modalBoleta = document.getElementById("modal-boleta-exito");
+                if (modalBoleta) {
+                    modalPago.classList.remove("mostrar"); // Cierra el formulario de pago
+                    modalBoleta.classList.add("mostrar-boleta"); // Abre la boleta
+                }
+            }; 
             // 7. Botón final de cierre
             const btnFinalizarTodo = document.getElementById("btn-finalizar-todo");
-            if (btnFinalizarTodo && modalBoleta) {
+            if (btnFinalizarTodo) {
                 btnFinalizarTodo.onclick = () => {
+                    const boletaVentana = document.getElementById("modal-boleta-exito");
+
                     listaCarrito = [];
                     renderizarCarrito();
                     formularioPago.reset();
-                    modalBoleta.classList.remove("mostrar-boleta");
-                    alert("¡Gracias por su compra! El proceso ha finalizado correctamente.");
+
+                    if (boletaVentana) {
+                        boletaVentana.classList.remove("mostrar-boleta"); // Cierra la boleta de forma segura
+                    }
+
+                    mostrarNotificacionExito("¡Gracias por su compra! El proceso ha finalizado correctamente.");
                 };
             }
         });
@@ -258,26 +308,38 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // LÓGICA DE CONTROL: Comprobamos si el producto ya fue agregado antes mediante su nombre
-            const productoExistente = listaCarrito.find(item => item.nombre === titulo);
+           const productoExistente = listaCarrito.find(item => item.nombre === titulo);
 
-            if (productoExistente) {
-                // Si ya existe, aumentamos la cantidad en la lista interna (+1)
-                productoExistente.cantidad += 1;
-            } else {
-                // Si es un producto nuevo, lo agregamos con cantidad inicial de 1
-                const productoNuevo = {
-                    nombre: titulo,
-                    precio: precio,
-                    cantidad: 1
-                };
-                listaCarrito.push(productoNuevo);
-            }
+        if (productoExistente) {
+            // Si ya existe, aumentamos la cantidad en la lista interna (+1)
+            productoExistente.cantidad += 1;
+            
+            
+            localStorage.setItem('carritoEcoJardin', JSON.stringify(listaCarrito));
+            
+        } else {
+            // Si es un producto nuevo, lo agregamos con cantidad inicial de 1
+            const productoNuevo = {
+                nombre: titulo,
+                precio: precio,
+                cantidad: 1
+            };
+            listaCarrito.push(productoNuevo);
+            
+            //
+            localStorage.setItem('carritoEcoJardin', JSON.stringify(listaCarrito));
+        }
 
-            renderizarCarrito();
+        renderizarCarrito();
 
-            if (carritoPanel) {
-                carritoPanel.classList.add("abierto");
-            }
+                    if (carritoPanel) {
+            carritoPanel.classList.add("abierto"); // Abre el carrito al comprar
+            
+            // cIerre automatico
+            setTimeout(() => {
+                carritoPanel.classList.remove("abierto"); // Lo esconde solo
+            }, 3000); 
+        }
         });
     });
 
@@ -483,14 +545,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-        // ==========================================================================
+    // ==========================================================================
     // 10. BOTÓN FLOTANTE INTERACTIVO DE WHATSAPP (COMPORTAMIENTO UX - UTP)
     // ==========================================================================
     const waContenedor = document.getElementById("wa-contenedor");
     const waTooltip = document.getElementById("wa-tooltip");
 
     if (waContenedor && waTooltip) {
-        
+
         // INTERACCIÓN 1: El botón nace de forma asíncrona solo si el usuario baja 300px la pantalla
         window.addEventListener("scroll", () => {
             if (window.scrollY > 300) {
@@ -509,10 +571,37 @@ document.addEventListener("DOMContentLoaded", () => {
         waContenedor.addEventListener("mouseleave", () => {
             waTooltip.classList.remove("mostrar-tooltip");
         });
-        
+
     }
 
 
+// Función para crear y mostrar la notificación verde flotante
+    function mostrarNotificacionExito(mensaje) {
+        const contenedor = document.getElementById('toast-container');
+
+        // Creamos la tarjetita en memoria
+        const toast = document.createElement('div');
+        toast.className = 'toast-success';
+
+        // Le metemos un icono de check de FontAwesome y el texto
+        toast.innerHTML = `<i class="fas fa-check-circle" style="font-size: 18px;"></i> <span>${mensaje}</span>`;
+
+        // La metemos físicamente dentro del contenedor del HTML
+        contenedor.appendChild(toast);
+
+        // Pequeño truco de tiempo para que se ejecute la animación CSS de entrada
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+
+        // Programamos que se oculte y se destruya sola después de 4 segundos (4000 milisegundos)
+        setTimeout(() => {
+            toast.classList.remove('show'); // Se desliza hacia afuera
+            setTimeout(() => {
+                toast.remove(); // Se borra por completo del código para no saturar la memoria
+            }, 400);
+        }, 4000);
+    }
 
 
 });
